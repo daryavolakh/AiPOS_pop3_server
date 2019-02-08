@@ -1,11 +1,13 @@
-import com.mysql.fabric.jdbc.FabricMySQLDriver;
+package com.mycompany.aipos_pop3_server;
+
 import java.sql.*;
+import com.mysql.fabric.jdbc.FabricMySQLDriver;
 
 public class DataBase {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "summernothot";
     private static final String URL = "jdbc:mysql://localhost:3306/aipos?useSSL=false";    
-    private PreparedStatement statement;
+   // private PreparedStatement statement;
     private Connection connection;
     private Driver driver;
     
