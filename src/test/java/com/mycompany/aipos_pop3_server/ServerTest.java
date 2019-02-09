@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
  */
 public class ServerTest {
     
-    public ServerTest() {
+  /*  public ServerTest() {
     }
     
     @BeforeClass
@@ -36,11 +36,11 @@ public class ServerTest {
     @After
     public void tearDown() {
     }
-
+*/
     /**
      * Test of quit method, of class Server.
      */
-    @Test
+/*    @Test
     public void testQuit() {
         System.out.println("quit");
         Server instance = null;
@@ -52,6 +52,7 @@ public class ServerTest {
     /**
      * Test of start method, of class Server.
      */
+    /*
     @Test
     public void testStart() {
         System.out.println("start");
@@ -60,10 +61,11 @@ public class ServerTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-
+*/
     /**
      * Test of main method, of class Server.
      */
+/*
     @Test
     public void testMain() {
         System.out.println("main");
@@ -71,6 +73,6 @@ public class ServerTest {
         Server.main(args);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
-    }
+    }*/
     
 }

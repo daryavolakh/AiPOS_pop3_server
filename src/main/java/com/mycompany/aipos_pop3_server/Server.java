@@ -19,9 +19,11 @@ public class Server {
             .getName());; 
         
     public static FileHandler fh;  
+    public SimpleDateFormat time;
     
   public Server(int port) {
         this.port = port;
+        this.time = new SimpleDateFormat("HH:mm:ss");
     }
   
   public void quit(){
@@ -45,24 +47,23 @@ public class Server {
         fh = new FileHandler("D:/LogFile.log");
         fh.setFormatter(new SimpleFormatter());
         logger.addHandler(fh);
-        logger.fine("fine message");
-        
-         
-        this.serverSocket = new ServerSocket(this.port);
+        serverSocket = new ServerSocket(port);
+        logger.fine(time.format(new Date()) + " Listen"); 
         int numOfClients = 1;
         while(true){ 
-            Socket client = this.serverSocket.accept();
-            
+            Socket client = serverSocket.accept();
+            logger.fine(time.format(new Date()) + " Accept client"); 
             System.out.println("Spawning " + numOfClients);
             Runnable r = new ServerHandler(client);
             Thread thread = new Thread(r);
+            logger.fine(time.format(new Date()) + " Create thread for client"); 
             thread.start();
-            logger.fine("fine message"); 
+            
             numOfClients++;
            }
         }
     catch (IOException exeption) {
-        logger.severe("error message");
+        logger.severe(time.format(new Date()) + " Error");
         System.out.println("Something went wrong 1");
         }
   }
@@ -75,37 +76,5 @@ public class Server {
     
     server.start();
   }
-  /*Этот класс обрабатывает данные, получаемые сервером от клиента через одно сокетное соединение*/
-  class ServerHandler implements Runnable{
-      private Socket incoming;
-      
-      public ServerHandler(Socket incomingSocket){
-          this.incoming = incomingSocket;
-      }
-      
-      public void run(){
-          try(InputStream inStream = incoming.getInputStream();
-                  OutputStream outStream = incoming.getOutputStream()){
-              Scanner in = new Scanner(inStream, "UTF-8");
-              PrintWriter out = new PrintWriter(
-              new OutputStreamWriter(outStream, "UTF-8"), true /* auto cleanning*/);
-              out.println("HELLO, ALESYA! Enter quit to exit! ");
-              //передать обратно данные, которые получили от клиента
-                    boolean done = false;
-                    while(!done && in.hasNextLine())
-                    {
-                        String line = in.nextLine();
-                        if (line.trim().equals("quit") || line.trim().equals("QUIT")) {
-                            done = true;
-                            //this.quit();
-                            break;
-                        }
-                        }
-          }
-          
-          catch (IOException exception){
-              System.out.println("Something went wrong");
-          }
-      }
-  }
+  
 }
