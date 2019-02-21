@@ -3,78 +3,71 @@ package com.mycompany.aipos_pop3_server;
 import java.io.*;
 import java.net.*;
 import java.util.*;
-import java.util.logging.*;
-import java.text.SimpleDateFormat;
-
+import org.apache.log4j.*;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 /**
  *
  * @author Darya and Alesya
  */
 public class Server {
-    static int port; 
+
+    static int port;
     public boolean isRunning;
     public ServerSocket serverSocket;
-    public DataBase db = new DataBase();
-    public static Logger logger = Logger.getLogger(Server.class
-            .getName());; 
-        
-    public static FileHandler fh;  
-    public SimpleDateFormat time;
-    
-  public Server(int port) {
+    public DataBase db;    
+    public Logger log = Logger.getLogger(Server.class);
+
+    public Server(int port) {
         this.port = port;
-        this.time = new SimpleDateFormat("HH:mm:ss");
+        PropertyConfigurator.configure ("src/main/java/com/mycompany/aipos_pop3_server/log4j.properties");
+        log.info("Hello this is an info message");
+        db = new DataBase();
+        List<String> list = db.getInfo();
+        System.out.println("LIST: " + list);
     }
-  
-  public void quit(){
-      System.out.println("QUIT");
-      this.isRunning = false;
-      try {
-        this.serverSocket.close();
-      }
-      
-      catch(Exception exception) {
-          System.out.println("Something went wrong");
+
+    public void quit() {
+        System.out.println("QUIT");
+        isRunning = false;
+        try {
+            serverSocket.close();
+        } catch (Exception exception) {
+            System.out.println("Something went wrong");
         }
-  }
-  
-  public void start(){
-      this.isRunning = true;
-      
-      
-      try
-    {   
-        fh = new FileHandler("D:/LogFile.log");
-        fh.setFormatter(new SimpleFormatter());
-        logger.addHandler(fh);
-        serverSocket = new ServerSocket(port);
-        logger.fine(time.format(new Date()) + " Listen"); 
-        int numOfClients = 1;
-        while(true){ 
-            Socket client = serverSocket.accept();
-            logger.fine(time.format(new Date()) + " Accept client"); 
-            System.out.println("Spawning " + numOfClients);
-            Runnable r = new ServerHandler(client);
-            Thread thread = new Thread(r);
-            logger.fine(time.format(new Date()) + " Create thread for client"); 
-            thread.start();
-            
-            numOfClients++;
-           }
+    }
+
+    public void start() {
+        isRunning = true;
+        
+        try {
+            log.info("Start server");
+            serverSocket = new ServerSocket(port);
+
+            int numOfClients = 1;
+            while (true) {
+                log.info("New client");
+                log.debug("New client");
+                Socket client = serverSocket.accept();
+                System.out.println("number of clients " + numOfClients);
+
+                Runnable r = new ServerHandler(client);
+                Thread thread = new Thread(r);
+                thread.start();
+
+                numOfClients++;
+            }
+        } catch (IOException exeption) {
+            log.debug("Start server error!");
+            log.info("Start server error!");
         }
-    catch (IOException exeption) {
-        logger.severe(time.format(new Date()) + " Error");
-        System.out.println("Something went wrong 1");
-        }
-  }
-  
-  public static void main(String[] args) {
-    int port = 110;
-    
-    Server server = new Server(port);
-    
-    
-    server.start();
-  }
-  
+    }
+
+    public static void main(String[] args) {
+       // int port = Integer.parseInt(args[1]);
+       // System.out.println(port);
+        int port = 110;
+        Server server = new Server(port);
+        server.start();
+    }
 }

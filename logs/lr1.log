@@ -1,0 +1,18 @@
+2019-02-21 15:45:40 INFO  Server:27 - Hello this is an info message
+2019-02-21 15:45:40 INFO  Server:47 - Start server
+2019-02-21 15:45:40 INFO  Server:52 - New client
+2019-02-21 16:18:05 INFO  Server:27 - Hello this is an info message
+2019-02-21 16:18:05 INFO  Server:47 - Start server
+2019-02-21 16:18:05 INFO  Server:52 - New client
+2019-02-21 16:19:29 INFO  Server:27 - Hello this is an info message
+2019-02-21 16:19:29 INFO  Server:47 - Start server
+2019-02-21 16:19:29 INFO  Server:52 - New client
+2019-02-21 21:15:47 INFO  Server:27 - Hello this is an info message
+2019-02-21 21:15:47 INFO  Server:47 - Start server
+2019-02-21 21:15:47 INFO  Server:52 - New client
+2019-02-21 22:24:16 INFO  Server:25 - Hello this is an info message
+2019-02-21 22:24:16 INFO  Server:45 - Start server
+2019-02-21 22:24:16 INFO  Server:50 - New client
+2019-02-21 23:31:34 INFO  Server:24 - Hello this is an info message
+2019-02-21 23:31:39 INFO  Server:44 - Start server
+2019-02-21 23:31:39 INFO  Server:49 - New client
