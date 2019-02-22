@@ -4,25 +4,24 @@ import java.sql.*;
 import com.mysql.fabric.jdbc.FabricMySQLDriver;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
+import org.apache.log4j.*;
+import org.apache.log4j.Logger;
 
 public class DataBase {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "summernothot";
-    private static final String URL = "jdbc:mysql://localhost:3306/aipos?useSSL=false";    
+    private static final String URL = "jdbc:mysql://localhost:3306/aipos?useSSL=false";   
+    public Logger log = Logger.getLogger(DataBase.class);
 
-    // class path - переменная соержащая ссылки на пути, где находятся важные файлы для вашего проекта
-    // батник в котором при запуске указывается class.path
-    // или
-    // бросить туда, где лежат библиотеки java
     private Connection connection;
     private Driver driver;
     
-    public DataBase(){ //throws ClassNotFoundException {
+    public DataBase(){ 
         try {
             driver = new FabricMySQLDriver();
 	} catch (SQLException ex) {
             System.out.println("Creating driver error!");
+            log.info("Creating driver error!");
             return;
 	}
 
@@ -30,15 +29,17 @@ public class DataBase {
             DriverManager.registerDriver(driver);
 	} catch (SQLException ex) {
             System.out.println("Can't register driver!");
+            log.info("Can't register driver!");
             return;
 	}
 
 	try {
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-           // connection = DriverManager.getConnection(URL, properties);
             System.out.println("Get connection!");
+            log.info("Get connection with DB");
         } catch (SQLException ex) {
             System.out.println("Can't create connection!");
+            log.info("Can't create connection with DB");
             return;
 	}
     }
