@@ -3,8 +3,7 @@ package com.mycompany.aipos_pop3_server;
 import java.io.*;
 import java.net.*;
 import java.util.*;
-import org.apache.log4j.*;
-import org.apache.log4j.Logger;
+
 /**
  *
  * @author Darya and Alesya
@@ -14,45 +13,48 @@ public class Server {
     static int port;
     public boolean isRunning;
     public ServerSocket serverSocket;
-    public DataBase db;    
-    public Logger log = Logger.getLogger(Server.class);
+    public DataBase db;
 
     public Server(int port) {
         this.port = port;
-        PropertyConfigurator.configure("log4j.properties");
-        
-        log.info("Start server");
-        db = new DataBase();
-        //just example
-        List<String> list = db.getInfo();
-        log.info("Get temp data from DB");
+       // db = new DataBase();
+       // List<String> list = db.getInfo();
+      //  System.out.println("LIST: " + list);
+    }
+
+    public void quit() {
+        System.out.println("QUIT");
+        isRunning = false;
+        try {
+            serverSocket.close();
+        } catch (Exception exception) {
+            System.out.println("Something went wrong");
+        }
     }
 
     public void start() {
         isRunning = true;
-        
+
         try {
             serverSocket = new ServerSocket(port);
 
-            int numOfClients = 0;
+            int numOfClients = 1;
             while (true) {
                 Socket client = serverSocket.accept();
+                System.out.println("Spawning " + numOfClients);
 
-                Runnable r = new ServerHandler(client);
+                Runnable r = new ServerHandler(client, Server.this);
                 Thread thread = new Thread(r);
                 thread.start();
 
-                numOfClients++;                
-                System.out.println("number of clients " + numOfClients);
+                numOfClients++;
             }
         } catch (IOException exeption) {
-            log.info("Start server error!");
+            System.out.println("Something went wrong 1");
         }
     }
 
     public static void main(String[] args) {
-        /*int port = Integer.parseInt(args[0]);
-        System.out.println(port);*/
         int port = 110;
         Server server = new Server(port);
         server.start();

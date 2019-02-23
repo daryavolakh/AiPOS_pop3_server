@@ -1,23 +1,33 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.mycompany.aipos_pop3_server;
 
 import java.io.*;
 import java.net.*;
+import java.sql.SQLException;
 import java.util.*;
-import org.apache.log4j.Logger;
+import java.util.logging.*;
+import java.text.SimpleDateFormat;
 
-/*This class process data recieved from client  through one socket connection*/
+/**
+ *
+ * @author Asus
+ */
+/*Этот класс обрабатывает данные, получаемые сервером от клиента через одно сокетное соединение*/
 class ServerHandler implements Runnable {
 
     private Socket incoming;
-    
-    public org.apache.log4j.Logger log = Logger.getLogger(ServerHandler.class);
-    
-    public ServerHandler(Socket incoming) {
-        this.incoming = incoming;
+    public Server server;
+
+    public ServerHandler(Socket incomingSocket, Server incomingserver) {
+        incoming = incomingSocket;
+        server = incomingserver;
     }
 
-    public void run() {        
-        log.info("New client");
+    public void run() {
         try (InputStream inStream = incoming.getInputStream();
                 OutputStream outStream = incoming.getOutputStream()) {
             Scanner in = new Scanner(inStream, "UTF-8");
@@ -25,21 +35,43 @@ class ServerHandler implements Runnable {
             PrintWriter out = new PrintWriter(
                     new OutputStreamWriter(outStream, "UTF-8"), true);
             /* true - auto cleanning*/
-            out.println("HELLO, ALESYA! Enter quit to exit! ");
-            log.info("Send message to client");
-            //send back client's data
+            out.println("+OK POP3 server ready <1896.697170952@dbc.mtview.ca.us>");
+            //передать обратно данные, которые получили от клиента
             boolean done = false;
             while (!done && in.hasNextLine()) {
-                String line = in.nextLine();                
-                log.info("Recieve data '" + line + "' from client");
-               /* if (line.trim().equals("quit") || line.trim().equals("QUIT")) {
+                String line = in.nextLine();
+                if (line.trim().equals("quit") || line.trim().equals("QUIT")) {
                     done = true;
+                    //this.quit();
                     break;
-                }*/
+                }
+                
+                if (line.trim().equals("CAPA")) {
+                    out.println("+OK Capability list follows");
+                    out.println("TOP");
+                    out.println("QUIT");
+                    out.println("RETR");
+                    out.println("USER");
+                    out.println(".");
+                }
+                
+                if(line.trim().equals("AUTH PLAIN")){
+                    String password = in.nextLine();
+                    
+                    try {
+                        if (server.db.auth(password)){
+                            System.out.println("Password is true");
+                        }
+                        
+                    } catch (SQLException ex) {
+                        System.out.println("Password is wrong");
+                    }
+                }
+                
+                
             }
         } catch (IOException exception) {
-            System.out.println("Can't get input data");
-            log.info("Can't get inout data");
+            System.out.println("Something went wrong");
         }
     }
 }
