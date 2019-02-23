@@ -38,7 +38,7 @@ public class Server {
             while (true) {
                 Socket client = serverSocket.accept();
 
-                Runnable r = new ServerHandler(client);
+                Runnable r = new ServerHandler(client, Server.this);
                 Thread thread = new Thread(r);
                 thread.start();
 
