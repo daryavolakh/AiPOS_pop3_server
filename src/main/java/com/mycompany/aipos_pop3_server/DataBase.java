@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 
 public class DataBase {
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "summernothot";
+    private static final String PASSWORD = "password";
     private static final String URL = "jdbc:mysql://localhost:3306/aipos?useSSL=false";   
     public Logger log = Logger.getLogger(DataBase.class);
 
@@ -44,11 +44,28 @@ public class DataBase {
 	}
     }
     
+    public boolean auth(String pass) throws SQLException{
+        Statement statement = connection.createStatement();
+
+			ResultSet resultSet = statement
+					.executeQuery("SELECT password FROM users WHERE password="
+							+ pass + ";");
+			
+        if(resultSet.next()){
+            
+            return true;
+        }
+        else{
+            return false;
+        }
+        
+    }
+    
     public List<String> getInfo() {
         List<String> list = new ArrayList<String>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM temp;");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM users;");
             while (resultSet.next()) {
                 list.add(resultSet.getString(1));
             }
