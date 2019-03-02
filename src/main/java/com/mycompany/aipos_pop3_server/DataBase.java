@@ -15,6 +15,13 @@ public class DataBase {
 
     private Connection connection;
     private Driver driver;
+
+    private static final String CHECK_USER = "SELECT user FROM users WHERE user=?;";
+    private static final String CHECK_PASSWORD = "SELECT password FROM users WHERE user=?;";
+    private static final String INSERT_DELETED = "INSERT INTO deletebox VALUES(?,?);";
+    private static final String DELETE_FROM_MAILBOX = "DELETE FROM mailbox WHERE username=? AND message=?;";
+    private static final String INSERT_MAILBOX = "INSERT INTO mailbox VALUES(?,?);";
+    private static final String DELETE_FROM_DELETEBOX = "DELETE FROM deletebox WHERE username=? AND message=?;";
     
     public DataBase(){ 
         try {
@@ -41,10 +48,8 @@ public class DataBase {
             System.out.println("Can't create connection!");
             log.info("Can't create connection with DB");
             return;
-	}
+	    }
     }
-    
-  
     
     public int getNumberOfMessages(String username){
         int numOfMessage = 0;
@@ -79,20 +84,7 @@ public class DataBase {
         } 
         return numOfChar; 
     }
-    
-    public boolean checkUser(String user) { 
-        try { 
-        Statement statement = connection.createStatement(); 
-        ResultSet resultSet = statement.executeQuery("SELECT user FROM users WHERE user='" + user + "';"); 
-        while (resultSet.next()) { 
-        return true; 
-        } 
-        } catch (SQLException e) { 
-        e.getMessage(); 
-        e.printStackTrace(); 
-        } 
-        return false; 
-}
+
      public String getMessageInfo(String username){
         String message="";
         int numOfMes = 0;
@@ -160,21 +152,107 @@ public class DataBase {
          message += ".";
         return message;
     }
-      
-    public List<String> getInfo() {
-        List<String> list = new ArrayList<String>();
+
+     public boolean checkUser(String user) {
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM users;");
+            ResultSet resultSet = statement.executeQuery(("SELECT user FROM users WHERE user='" + user + "';"));
             while (resultSet.next()) {
-                list.add(resultSet.getString(1));
+                return true;
             }
-        }
-        
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.getMessage();
             e.printStackTrace();
-	}
-        return list;
+        }
+        return false;
+    }
+
+    public boolean checkPass(String user, String pass) {
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT password FROM users WHERE user='" + user + "';");
+            while (resultSet.next()) {
+                if (resultSet.getString(1).equals(pass)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        } catch (SQLException e) {
+            e.getMessage();
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public boolean findInTable(String user, String message, String table) {
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT message FROM " + table + " WHERE user='" + user + "' AND message = '" + message + "';");
+            while (resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.getMessage();
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean delete(String user, String message) {
+        try {
+            if (findInTable(user, message, "mailbox")) {
+                PreparedStatement stInsert = connection.prepareStatement(INSERT_DELETED);
+                stInsert.setString(1, user);
+                stInsert.setString(2, message);
+
+                stInsert.execute();
+
+                PreparedStatement stDelete = connection.prepareStatement(DELETE_FROM_MAILBOX);
+                stDelete.setString(1, user);
+                stDelete.setString(2, message);
+
+                return true;
+            }
+        } catch (SQLException e) {
+            e.getMessage();
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+    
+    public void insertFromDeletebox(String user, String message){
+        try {
+            if (findInTable(user, message, "deletebox")) {
+                PreparedStatement stInsert = connection.prepareStatement(INSERT_MAILBOX);
+                stInsert.setString(1, user);
+                stInsert.setString(2, message);
+
+                stInsert.execute();
+
+                PreparedStatement stDelete = connection.prepareStatement(DELETE_FROM_DELETEBOX);
+                stDelete.setString(1, user);
+                stDelete.setString(2, message);
+
+                stDelete.execute();
+            }
+        } catch (SQLException e) {
+            e.getMessage();
+            e.printStackTrace();
+        }
+    }
+    
+    public void deleteAllFromDeletebox(String user){
+        try {
+            PreparedStatement stDelete = connection.prepareStatement("DELETE FROM deletebox WHERE username='" + user + "';");
+            stDelete.setString(1, user);
+            
+            stDelete.execute();
+        } catch (SQLException e) {
+            e.getMessage();
+            e.printStackTrace();
+        }
     }
 }

@@ -13,8 +13,7 @@ public class Server {
 
     static int port;
     public boolean isRunning;
-    public ServerSocket serverSocket;
-    public DataBase db;    
+    public ServerSocket serverSocket;   
     public Logger log = Logger.getLogger(Server.class);
 
     public Server(int port) {
@@ -22,10 +21,6 @@ public class Server {
         PropertyConfigurator.configure("src/resources/log4j.properties");
         
         log.info("Start server");
-        db = new DataBase();
-        //just example
-        List<String> list = db.getInfo();
-        log.info("Get temp data from DB");
     }
 
     public void start() {
