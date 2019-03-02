@@ -6,6 +6,7 @@ import java.util.*;
 import org.apache.log4j.Logger;
 import java.sql.SQLException;
 import java.util.Base64.Decoder;
+import java.util.logging.Level;
 
 /*This class process data recieved from client  through one socket connection*/
 class ServerHandler implements Runnable {
@@ -22,57 +23,80 @@ class ServerHandler implements Runnable {
 
     public void run() {        
         log.info("New client");
+        String username = "alesya213";
+        String info = "";
+        String command = "";
         try (InputStream inStream = incoming.getInputStream();
                 OutputStream outStream = incoming.getOutputStream()) {
             Scanner in = new Scanner(inStream, "UTF-8");
-
+            
             PrintWriter out = new PrintWriter(
                     new OutputStreamWriter(outStream, "UTF-8"), true);
             /* true - auto cleanning*/
-            out.println("+OK POP3 server ready <1896.697170952@dbc.mtview.ca.us>");
+            out.println("+OK POP3 server ready <>");
             log.info("Send message to client");
             //send back client's data
             boolean done = false;
             while (!done && in.hasNextLine()) {
-                String line = in.nextLine();                
+                String line = in.nextLine(); 
+                if (line.contains(" ")){ 
+                    int index = line.indexOf(" "); 
+                    info = line.substring(index + 1, line.length()); 
+                    command = line.substring(0, index); 
+                    } 
+
+                    else { 
+                    command = line; 
+                    }
                 log.info("Recieve data '" + line + "' from client");
-               if (line.trim().equals("quit") || line.trim().equals("QUIT")) {
+               if (line.trim().equals("QUIT")) {
+                    out.println("+OK dewey POP3 server signing off");
                     done = true;
                     break;
                 }
                
-               if (line.trim().equals("CAPA")) {
-                    out.println("+OK Capability list follows");
-                    out.println("TOP");
-                    out.println("QUIT");
-                    out.println("RETR");
-                    out.println("USER");
-                    out.println(".");
+               else if (line.trim().equals("CAPA")) {
+                    out.println("-ERR invalid command CAPA");
                 }
                 
-                if(line.trim().equals("AUTH PLAIN")){
-                    out.println("+");
-                    String incomingPassword = in.nextLine();
-                    byte[] decodedBytes = Base64.getDecoder().decode(incomingPassword);
-                    System.out.println(incomingPassword);
-                    String decodedPass = new String(decodedBytes);
-                    String target = ".com";
-                    int index = decodedPass.indexOf(target);
-                    int subIndex = index + target.length();
-                    String password = decodedPass.substring(subIndex);
-                    String username = decodedPass.substring(0, subIndex);
-                    try {
-                        if (server.db.auth(password)){
-                            out.println("+OK Maildrop locked and ready");
-                        }
-                        
-                    } catch (SQLException ex) {
-                    } 
+               else if(line.trim().equals("AUTH PLAIN")){
+                    out.println("-ERR invalid command AUTH PLAIN");
                 } 
+               
+               else if(line.trim().equals("USER alesya213")){
+                   out.println("+OK User accepted");
+               }
+               
+               else if(line.trim().equals("PASS 123")){
+                   out.println("+OK Pass accepted");
+               }
+               
+               else if(line.trim().equals("STAT")){
+                   out.println("+OK "+ server.db.getNumberOfMessages(username)+" "+ server.db.getAllCharacters(username));
+               }
+               
+               else if(line.trim().equals("LIST")){
+                   out.println("+OK"+ server.db.getNumberOfMessages(username)+"  messages ("+server.db.getAllCharacters(username)+" octets)");
+                   out.println(server.db.getMessageInfo(username));
+               }
+               
+               else if(line.trim().equals("UIDL")){
+                   out.println("+OK");
+                   out.println(server.db.getMessages(username));
+               }
+               
+               else if(command.equals("RETR")){
+                   out.println("+OK");
+                   out.println(server.db.getMessage(username, Integer.parseInt(info)));
+               }
+               
+               if (line.trim().equals("NOOP")) { 
+                out.println("+OK");
+                }
             }
         } catch (IOException exception) {
             System.out.println("Can't get input data");
             log.info("Can't get inout data");
-        }
+        } 
     }
 }

@@ -19,7 +19,7 @@ public class Server {
 
     public Server(int port) {
         this.port = port;
-        PropertyConfigurator.configure("log4j.properties");
+        PropertyConfigurator.configure("src/resources/log4j.properties");
         
         log.info("Start server");
         db = new DataBase();

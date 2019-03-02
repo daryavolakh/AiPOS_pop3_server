@@ -16,3 +16,205 @@
 2019-02-21 23:31:34 INFO  Server:24 - Hello this is an info message
 2019-02-21 23:31:39 INFO  Server:44 - Start server
 2019-02-21 23:31:39 INFO  Server:49 - New client
+2019-02-26 16:34:32 INFO  Server:24 - Start server
+2019-02-26 16:34:32 INFO  DataBase:39 - Get connection with DB
+2019-02-26 16:34:32 INFO  Server:28 - Get temp data from DB
+2019-02-26 16:34:40 INFO  ServerHandler:25 - New client
+2019-02-26 16:34:40 INFO  ServerHandler:34 - Send message to client
+2019-02-26 16:34:43 INFO  ServerHandler:39 - Recieve data 'CAPA' from client
+2019-02-26 16:34:49 INFO  ServerHandler:39 - Recieve data 'AUTH PLAIN' from client
+2019-02-26 16:38:34 INFO  Server:24 - Start server
+2019-02-26 16:38:35 INFO  DataBase:39 - Get connection with DB
+2019-02-26 16:38:35 INFO  Server:28 - Get temp data from DB
+2019-02-26 16:38:45 INFO  ServerHandler:25 - New client
+2019-02-26 16:38:45 INFO  ServerHandler:34 - Send message to client
+2019-02-26 16:39:06 INFO  ServerHandler:39 - Recieve data 'CAPA' from client
+2019-02-26 16:39:18 INFO  ServerHandler:39 - Recieve data 'AUTH PLAIN' from client
+2019-02-26 16:42:21 INFO  ServerHandler:25 - New client
+2019-02-26 16:42:21 INFO  ServerHandler:34 - Send message to client
+2019-02-26 17:46:49 INFO  ServerHandler:25 - New client
+2019-02-26 17:46:49 INFO  ServerHandler:34 - Send message to client
+2019-03-01 18:52:36 INFO  Server:24 - Start server
+2019-03-01 18:52:37 INFO  DataBase:39 - Get connection with DB
+2019-03-01 18:52:37 INFO  Server:28 - Get temp data from DB
+2019-03-01 18:52:45 INFO  ServerHandler:25 - New client
+2019-03-01 18:52:45 INFO  ServerHandler:34 - Send message to client
+2019-03-01 18:52:49 INFO  ServerHandler:39 - Recieve data 'CAPA' from client
+2019-03-01 18:52:59 INFO  ServerHandler:39 - Recieve data 'AUTH PLAIN' from client
+2019-03-01 18:53:07 INFO  ServerHandler:39 - Recieve data 'USER alesya213' from client
+2019-03-01 18:53:17 INFO  ServerHandler:39 - Recieve data 'PASS 123' from client
+2019-03-01 18:55:48 INFO  ServerHandler:39 - Recieve data 'STAT' from client
+2019-03-01 18:56:03 INFO  Server:24 - Start server
+2019-03-01 18:56:03 INFO  DataBase:39 - Get connection with DB
+2019-03-01 18:56:03 INFO  Server:28 - Get temp data from DB
+2019-03-01 18:56:12 INFO  ServerHandler:25 - New client
+2019-03-01 18:56:12 INFO  ServerHandler:34 - Send message to client
+2019-03-01 18:56:15 INFO  ServerHandler:39 - Recieve data 'CAPA' from client
+2019-03-01 18:56:16 INFO  ServerHandler:39 - Recieve data 'AUTH PLAIN' from client
+2019-03-01 18:56:16 INFO  ServerHandler:39 - Recieve data 'USER alesya213' from client
+2019-03-01 18:56:18 INFO  ServerHandler:39 - Recieve data 'PASS 123' from client
+2019-03-01 18:56:19 INFO  ServerHandler:39 - Recieve data 'STAT' from client
+2019-03-01 18:56:20 INFO  ServerHandler:39 - Recieve data 'QUIT' from client
+2019-03-01 18:57:07 INFO  Server:24 - Start server
+2019-03-01 18:57:08 INFO  DataBase:39 - Get connection with DB
+2019-03-01 18:57:08 INFO  Server:28 - Get temp data from DB
+2019-03-01 18:57:24 INFO  ServerHandler:25 - New client
+2019-03-01 18:57:24 INFO  ServerHandler:34 - Send message to client
+2019-03-01 18:57:30 INFO  ServerHandler:39 - Recieve data 'CAPA' from client
+2019-03-01 18:57:31 INFO  ServerHandler:39 - Recieve data 'AUTH PLAIN' from client
+2019-03-01 18:57:32 INFO  ServerHandler:39 - Recieve data 'USER alesya213' from client
+2019-03-01 18:57:34 INFO  ServerHandler:39 - Recieve data 'PASS 123' from client
+2019-03-01 18:57:36 INFO  ServerHandler:39 - Recieve data 'STAT' from client
+2019-03-01 19:00:06 INFO  Server:24 - Start server
+2019-03-01 19:00:07 INFO  DataBase:39 - Get connection with DB
+2019-03-01 19:00:07 INFO  Server:28 - Get temp data from DB
+2019-03-01 19:00:12 INFO  ServerHandler:25 - New client
+2019-03-01 19:00:12 INFO  ServerHandler:34 - Send message to client
+2019-03-01 19:00:16 INFO  ServerHandler:39 - Recieve data 'CAPA' from client
+2019-03-01 19:00:18 INFO  ServerHandler:39 - Recieve data 'AUTH PLAIN' from client
+2019-03-01 19:00:19 INFO  ServerHandler:39 - Recieve data 'USER alesya213' from client
+2019-03-01 19:00:20 INFO  ServerHandler:39 - Recieve data 'PASS 123' from client
+2019-03-01 19:00:20 INFO  ServerHandler:39 - Recieve data 'STAT' from client
+2019-03-01 19:00:21 INFO  ServerHandler:39 - Recieve data 'LIST' from client
+2019-03-01 19:03:50 INFO  Server:24 - Start server
+2019-03-01 19:03:50 INFO  DataBase:39 - Get connection with DB
+2019-03-01 19:03:50 INFO  Server:28 - Get temp data from DB
+2019-03-01 19:04:22 INFO  ServerHandler:25 - New client
+2019-03-01 19:04:22 INFO  ServerHandler:34 - Send message to client
+2019-03-01 19:04:24 INFO  ServerHandler:39 - Recieve data 'CAPA' from client
+2019-03-01 19:04:25 INFO  ServerHandler:39 - Recieve data 'AUTH PLAIN' from client
+2019-03-01 19:04:27 INFO  ServerHandler:39 - Recieve data 'USER alesya213' from client
+2019-03-01 19:04:28 INFO  ServerHandler:39 - Recieve data 'PASS 123' from client
+2019-03-01 19:04:30 INFO  ServerHandler:39 - Recieve data 'STAT' from client
+2019-03-01 19:04:31 INFO  ServerHandler:39 - Recieve data 'LIST' from client
+2019-03-01 19:04:33 INFO  ServerHandler:39 - Recieve data 'UIDL' from client
+2019-03-01 19:08:41 INFO  ServerHandler:25 - New client
+2019-03-01 19:08:41 INFO  ServerHandler:34 - Send message to client
+2019-03-01 21:14:25 INFO  ServerHandler:25 - New client
+2019-03-01 21:14:25 INFO  ServerHandler:34 - Send message to client
+2019-03-01 21:24:25 INFO  ServerHandler:25 - New client
+2019-03-01 21:24:25 INFO  ServerHandler:34 - Send message to client
+2019-03-01 21:34:25 INFO  ServerHandler:25 - New client
+2019-03-01 21:34:25 INFO  ServerHandler:34 - Send message to client
+2019-03-01 21:44:25 INFO  ServerHandler:25 - New client
+2019-03-01 21:44:25 INFO  ServerHandler:34 - Send message to client
+2019-03-01 21:54:25 INFO  ServerHandler:25 - New client
+2019-03-01 21:54:25 INFO  ServerHandler:34 - Send message to client
+2019-03-01 22:34:53 INFO  Server:24 - Start server
+2019-03-01 22:34:54 INFO  DataBase:39 - Get connection with DB
+2019-03-01 22:34:54 INFO  Server:28 - Get temp data from DB
+2019-03-01 22:34:57 INFO  ServerHandler:25 - New client
+2019-03-01 22:34:57 INFO  ServerHandler:35 - Send message to client
+2019-03-01 22:35:03 INFO  ServerHandler:40 - Recieve data 'CAPA' from client
+2019-03-01 22:36:07 INFO  ServerHandler:40 - Recieve data 'AUTH PLAIN' from client
+2019-03-01 22:36:13 INFO  ServerHandler:40 - Recieve data 'USER alesya213' from client
+2019-03-01 22:36:16 INFO  ServerHandler:40 - Recieve data 'PASS 123' from client
+2019-03-01 22:36:18 INFO  ServerHandler:40 - Recieve data 'STAT' from client
+2019-03-01 22:37:22 INFO  Server:24 - Start server
+2019-03-01 22:37:22 INFO  DataBase:39 - Get connection with DB
+2019-03-01 22:37:22 INFO  Server:28 - Get temp data from DB
+2019-03-01 22:37:26 INFO  ServerHandler:25 - New client
+2019-03-01 22:37:26 INFO  ServerHandler:35 - Send message to client
+2019-03-01 22:37:29 INFO  ServerHandler:40 - Recieve data 'CAPA' from client
+2019-03-01 22:37:29 INFO  ServerHandler:40 - Recieve data 'AUTH PLAIN' from client
+2019-03-01 22:37:31 INFO  ServerHandler:40 - Recieve data 'USER alesya213' from client
+2019-03-01 22:37:32 INFO  ServerHandler:40 - Recieve data 'PASS 123' from client
+2019-03-01 22:37:35 INFO  ServerHandler:40 - Recieve data 'STAT' from client
+2019-03-01 22:44:25 INFO  ServerHandler:25 - New client
+2019-03-01 22:44:25 INFO  ServerHandler:35 - Send message to client
+2019-03-01 22:51:29 INFO  Server:24 - Start server
+2019-03-01 22:51:30 INFO  DataBase:39 - Get connection with DB
+2019-03-01 22:51:30 INFO  Server:28 - Get temp data from DB
+2019-03-01 22:51:34 INFO  ServerHandler:25 - New client
+2019-03-01 22:51:34 INFO  ServerHandler:35 - Send message to client
+2019-03-01 22:51:37 INFO  ServerHandler:40 - Recieve data 'CAPA' from client
+2019-03-01 22:51:38 INFO  ServerHandler:40 - Recieve data 'AUTH PLAIN' from client
+2019-03-01 22:51:39 INFO  ServerHandler:40 - Recieve data 'USER alesya213' from client
+2019-03-01 22:51:40 INFO  ServerHandler:40 - Recieve data 'PASS 123' from client
+2019-03-01 22:51:41 INFO  ServerHandler:40 - Recieve data 'STAT' from client
+2019-03-01 22:51:43 INFO  ServerHandler:40 - Recieve data 'LIST' from client
+2019-03-01 22:53:18 INFO  Server:24 - Start server
+2019-03-01 22:53:18 INFO  DataBase:39 - Get connection with DB
+2019-03-01 22:53:18 INFO  Server:28 - Get temp data from DB
+2019-03-01 22:53:19 INFO  ServerHandler:25 - New client
+2019-03-01 22:53:19 INFO  ServerHandler:35 - Send message to client
+2019-03-01 22:53:25 INFO  ServerHandler:40 - Recieve data 'CAPA' from client
+2019-03-01 22:53:26 INFO  ServerHandler:40 - Recieve data 'AUTH PLAIN' from client
+2019-03-01 22:53:26 INFO  ServerHandler:40 - Recieve data 'USER alesya213' from client
+2019-03-01 22:53:27 INFO  ServerHandler:40 - Recieve data 'PASS 123' from client
+2019-03-01 22:53:28 INFO  ServerHandler:40 - Recieve data 'STAT' from client
+2019-03-01 22:53:29 INFO  ServerHandler:40 - Recieve data 'LIST' from client
+2019-03-01 22:56:12 INFO  Server:24 - Start server
+2019-03-01 22:56:12 INFO  DataBase:39 - Get connection with DB
+2019-03-01 22:56:12 INFO  Server:28 - Get temp data from DB
+2019-03-01 22:56:35 INFO  ServerHandler:25 - New client
+2019-03-01 22:56:35 INFO  ServerHandler:35 - Send message to client
+2019-03-01 22:56:38 INFO  ServerHandler:40 - Recieve data 'CAPA' from client
+2019-03-01 22:56:39 INFO  ServerHandler:40 - Recieve data 'AUTH PLAIN' from client
+2019-03-01 22:56:40 INFO  ServerHandler:40 - Recieve data 'USER alesya213' from client
+2019-03-01 22:56:41 INFO  ServerHandler:40 - Recieve data 'PASS 123' from client
+2019-03-01 22:56:43 INFO  ServerHandler:40 - Recieve data 'STAT' from client
+2019-03-01 22:56:45 INFO  ServerHandler:40 - Recieve data 'LIST' from client
+2019-03-01 23:03:14 INFO  Server:24 - Start server
+2019-03-01 23:03:15 INFO  DataBase:39 - Get connection with DB
+2019-03-01 23:03:15 INFO  Server:28 - Get temp data from DB
+2019-03-01 23:03:22 INFO  ServerHandler:25 - New client
+2019-03-01 23:03:22 INFO  ServerHandler:35 - Send message to client
+2019-03-01 23:03:33 INFO  ServerHandler:40 - Recieve data 'CAPA' from client
+2019-03-01 23:03:34 INFO  ServerHandler:40 - Recieve data 'AUTH PLAIN' from client
+2019-03-01 23:03:36 INFO  ServerHandler:40 - Recieve data 'USER alesya213' from client
+2019-03-01 23:03:38 INFO  ServerHandler:40 - Recieve data 'PASS 123' from client
+2019-03-01 23:03:40 INFO  ServerHandler:40 - Recieve data 'STAT' from client
+2019-03-01 23:03:41 INFO  ServerHandler:40 - Recieve data 'LIST' from client
+2019-03-01 23:03:49 INFO  ServerHandler:40 - Recieve data 'UIDL' from client
+2019-03-01 23:22:09 INFO  Server:24 - Start server
+2019-03-01 23:22:09 INFO  DataBase:39 - Get connection with DB
+2019-03-01 23:22:09 INFO  Server:28 - Get temp data from DB
+2019-03-01 23:22:42 INFO  ServerHandler:25 - New client
+2019-03-01 23:22:42 INFO  ServerHandler:37 - Send message to client
+2019-03-01 23:22:45 INFO  ServerHandler:51 - Recieve data 'CAPA' from client
+2019-03-01 23:22:56 INFO  ServerHandler:51 - Recieve data 'AUTH PLAIN' from client
+2019-03-01 23:23:06 INFO  ServerHandler:51 - Recieve data 'USER alesya213' from client
+2019-03-01 23:23:08 INFO  ServerHandler:51 - Recieve data 'PASS 123' from client
+2019-03-01 23:23:09 INFO  ServerHandler:51 - Recieve data 'STAT' from client
+2019-03-01 23:23:10 INFO  ServerHandler:51 - Recieve data 'LIST' from client
+2019-03-01 23:23:11 INFO  ServerHandler:51 - Recieve data 'UIDL' from client
+2019-03-01 23:23:13 INFO  ServerHandler:51 - Recieve data 'RETR 1' from client
+2019-03-01 23:23:58 INFO  Server:24 - Start server
+2019-03-01 23:23:58 INFO  DataBase:39 - Get connection with DB
+2019-03-01 23:23:58 INFO  Server:28 - Get temp data from DB
+2019-03-01 23:24:00 INFO  ServerHandler:25 - New client
+2019-03-01 23:24:00 INFO  ServerHandler:37 - Send message to client
+2019-03-01 23:24:03 INFO  ServerHandler:51 - Recieve data 'CAPA' from client
+2019-03-01 23:24:04 INFO  ServerHandler:51 - Recieve data 'AUTH PLAIN' from client
+2019-03-01 23:24:05 INFO  ServerHandler:51 - Recieve data 'USER alesya213' from client
+2019-03-01 23:24:06 INFO  ServerHandler:51 - Recieve data 'PASS 123' from client
+2019-03-01 23:24:08 INFO  ServerHandler:51 - Recieve data 'STAT' from client
+2019-03-01 23:24:09 INFO  ServerHandler:51 - Recieve data 'LIST' from client
+2019-03-01 23:24:10 INFO  ServerHandler:51 - Recieve data 'UIDL' from client
+2019-03-01 23:24:14 INFO  ServerHandler:51 - Recieve data 'RETR 2' from client
+2019-03-01 23:24:22 INFO  ServerHandler:51 - Recieve data 'RETR 3' from client
+2019-03-01 23:24:55 INFO  ServerHandler:51 - Recieve data 'QUIT' from client
+2019-03-01 23:27:09 INFO  ServerHandler:25 - New client
+2019-03-01 23:27:09 INFO  ServerHandler:37 - Send message to client
+2019-03-01 23:27:14 INFO  ServerHandler:51 - Recieve data 'CAPA' from client
+2019-03-01 23:27:15 INFO  ServerHandler:51 - Recieve data 'AUTH PLAIN' from client
+2019-03-01 23:27:17 INFO  ServerHandler:51 - Recieve data 'USER alesya213' from client
+2019-03-01 23:27:18 INFO  ServerHandler:51 - Recieve data 'PASS 123' from client
+2019-03-01 23:27:21 INFO  ServerHandler:51 - Recieve data 'STAT' from client
+2019-03-01 23:27:24 INFO  ServerHandler:51 - Recieve data 'LIST' from client
+2019-03-01 23:27:25 INFO  ServerHandler:51 - Recieve data 'UIDL' from client
+2019-03-01 23:27:26 INFO  ServerHandler:51 - Recieve data 'QUIT' from client
+2019-03-01 23:27:57 INFO  Server:24 - Start server
+2019-03-01 23:27:57 INFO  DataBase:39 - Get connection with DB
+2019-03-01 23:27:57 INFO  Server:28 - Get temp data from DB
+2019-03-01 23:28:00 INFO  ServerHandler:25 - New client
+2019-03-01 23:28:00 INFO  ServerHandler:37 - Send message to client
+2019-03-01 23:28:03 INFO  ServerHandler:51 - Recieve data 'CAPA' from client
+2019-03-01 23:28:04 INFO  ServerHandler:51 - Recieve data 'AUTH PLAIN' from client
+2019-03-01 23:28:06 INFO  ServerHandler:51 - Recieve data 'USER alesya213' from client
+2019-03-01 23:28:09 INFO  ServerHandler:51 - Recieve data 'PASS 123' from client
+2019-03-01 23:28:10 INFO  ServerHandler:51 - Recieve data 'STAT' from client
+2019-03-01 23:28:11 INFO  ServerHandler:51 - Recieve data 'LIST' from client
+2019-03-01 23:28:13 INFO  ServerHandler:51 - Recieve data 'UIDL' from client
+2019-03-01 23:29:09 INFO  ServerHandler:51 - Recieve data 'DELE 1' from client
