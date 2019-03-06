@@ -15,13 +15,14 @@ public class DataBase {
 
     private Connection connection;
     private Driver driver;
-
+    
     private static final String CHECK_USER = "SELECT user FROM users WHERE user=?;";
     private static final String CHECK_PASSWORD = "SELECT password FROM users WHERE user=?;";
     private static final String INSERT_DELETED = "INSERT INTO deletebox VALUES(?,?);";
     private static final String DELETE_FROM_MAILBOX = "DELETE FROM mailbox WHERE username=? AND message=?;";
     private static final String INSERT_MAILBOX = "INSERT INTO mailbox VALUES(?,?);";
     private static final String DELETE_FROM_DELETEBOX = "DELETE FROM deletebox WHERE username=? AND message=?;";
+    
     
     public DataBase(){ 
         try {
@@ -48,8 +49,10 @@ public class DataBase {
             System.out.println("Can't create connection!");
             log.info("Can't create connection with DB");
             return;
-	    }
+	}
     }
+    
+  
     
     public int getNumberOfMessages(String username){
         int numOfMessage = 0;
@@ -63,6 +66,7 @@ public class DataBase {
         } catch (SQLException e) { 
         e.getMessage(); 
         e.printStackTrace(); 
+        log.info(e.getMessage());
         } 
         return numOfMessage; 
     }
@@ -80,11 +84,13 @@ public class DataBase {
         } 
         } catch (SQLException e) { 
         e.getMessage(); 
-        e.printStackTrace(); 
+        e.printStackTrace();
+        log.info(e.getMessage());
         } 
         return numOfChar; 
     }
-
+    
+    
      public String getMessageInfo(String username){
         String message="";
         int numOfMes = 0;
@@ -100,14 +106,15 @@ public class DataBase {
         
         } catch (SQLException e) { 
         e.getMessage(); 
-        e.printStackTrace(); 
+        e.printStackTrace();
+        log.info(e.getMessage());
         } 
          message += ".";
         return message;
     }
      
      public String getMessages(String username){
-        String message="";
+        String message="+OK\r\n";
         int numOfMes = 0;
         int numOfChar = 0;
          try { 
@@ -118,17 +125,19 @@ public class DataBase {
             numOfMes++;
             message += numOfMes+" "+resultSet.getString("message")+"\r\n";
         } 
-        
+        message += ".";
         } catch (SQLException e) { 
         e.getMessage(); 
         e.printStackTrace(); 
+        message = "";
+        log.info(e.getMessage());
         } 
-         message += ".";
+        
         return message;
     }
      
      public String getMessage(String username, int mesInd){
-        String message="";
+        String message="+OK\r\n";
         mesInd -=1;
         int numOfMes = 0;
         int numOfChar = 0;
@@ -143,49 +152,17 @@ public class DataBase {
             
             numOfMes++;
         } 
-        
+         message += ".";
         } catch (SQLException e) { 
         e.getMessage(); 
         e.printStackTrace(); 
-        message += "This message not found";
+        message = "";
+        log.info(e.getMessage());
         } 
-         message += ".";
+        
         return message;
     }
-
-     public boolean checkUser(String user) {
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(("SELECT user FROM users WHERE user='" + user + "';"));
-            while (resultSet.next()) {
-                return true;
-            }
-        } catch (SQLException e) {
-            e.getMessage();
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public boolean checkPass(String user, String pass) {
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT password FROM users WHERE user='" + user + "';");
-            while (resultSet.next()) {
-                if (resultSet.getString(1).equals(pass)) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        } catch (SQLException e) {
-            e.getMessage();
-            e.printStackTrace();
-        }
-
-        return false;
-    }
-
+    
     public boolean findInTable(String user, String message, String table) {
         try {
             Statement statement = connection.createStatement();
@@ -196,6 +173,7 @@ public class DataBase {
         } catch (SQLException e) {
             e.getMessage();
             e.printStackTrace();
+            log.info(e.getMessage());
         }
         return false;
     }
@@ -218,6 +196,7 @@ public class DataBase {
         } catch (SQLException e) {
             e.getMessage();
             e.printStackTrace();
+            log.info(e.getMessage());
         }
 
         return false;
@@ -241,6 +220,7 @@ public class DataBase {
         } catch (SQLException e) {
             e.getMessage();
             e.printStackTrace();
+            log.info(e.getMessage());
         }
     }
     
@@ -253,6 +233,42 @@ public class DataBase {
         } catch (SQLException e) {
             e.getMessage();
             e.printStackTrace();
+            log.info(e.getMessage());
         }
+    }
+    
+      public boolean checkUser(String user) {
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(("SELECT username FROM users WHERE username='" + user + "';"));
+            while (resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.getMessage();
+            e.printStackTrace();
+            log.info(e.getMessage());
+        }
+        return false;
+    }
+
+    public boolean checkPass(String user, String pass) {
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT password FROM users WHERE username='" + user + "';");
+            while (resultSet.next()) {
+                if (resultSet.getString(1).equals(pass)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        } catch (SQLException e) {
+            e.getMessage();
+            e.printStackTrace();
+            log.info(e.getMessage());
+        }
+
+        return false;
     }
 }

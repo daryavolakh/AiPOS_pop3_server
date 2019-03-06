@@ -4,6 +4,9 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 import org.apache.log4j.Logger;
+import java.sql.SQLException;
+import java.util.Base64.Decoder;
+import java.util.logging.Level;
 
 /*This class process data recieved from client  through one socket connection*/
 class ServerHandler implements Runnable {
@@ -30,8 +33,6 @@ class ServerHandler implements Runnable {
             
             PrintWriter out = new PrintWriter(
                     new OutputStreamWriter(outStream, "UTF-8"), true);
-            /* true - auto cleanning*/
-            
             String message = "+OK POP3 server ready <>";
             out.println(message);
             log.info("S: '" + message);
@@ -43,21 +44,23 @@ class ServerHandler implements Runnable {
                     int index = line.indexOf(" "); 
                     info = line.substring(index + 1, line.length()); 
                     command = line.substring(0, index); 
-                } else { 
+                    } 
+
+                    else { 
                     command = line; 
-                }
+                    }
                 log.info("C: '" + line);
-               if (line.trim().equals("QUIT")) {
+               if (command.trim().equals("QUIT")) {
                     db.deleteAllFromDeletebox(username);
                     message = "+OK dewey POP3 server signing off";
                     out.println(message);
                     log.info("S: '" + message);
                     done = true;
                     break;
-                } 
+                }
                
-               if (command.trim().equals("USER")) {
-                    username = info;
+               else if(command.trim().equals("USER")){
+                   username = info;
 
                     if (db.checkUser(info)) {
                         message = "+OK User accepted";
@@ -68,10 +71,10 @@ class ServerHandler implements Runnable {
                         out.println(message);
                         log.info("S: '" + message);
                     }
-                } 
-                
-                else if (command.trim().equals("PASS")) {
-                    if (db.checkPass(username, info)) {
+               }
+               
+               else if(command.trim().equals("PASS")){
+                   if (db.checkPass(username, info)) {
                         message = "+OK Pass accepted";
                         out.println(message);
                         log.info("S: '" + message);
@@ -80,16 +83,16 @@ class ServerHandler implements Runnable {
                         out.println(message);
                         log.info("S: '" + message);
                     }
-                } 
-
-                else if (command.trim().equals("RSET")) {
+               }
+               
+               else if (command.trim().equals("RSET")) {
                     db.insertFromDeletebox(username, info);
                     message = "+OK";
                     out.println(message);
                     log.info("S: '" + message);
                 } 
-                
-                else if (command.trim().equals("DELE")) {
+               
+               else if (command.trim().equals("DELE")) {
                     if (db.delete(username, info)) {
                         message = "+OK message deleted";
                         out.println(message);
@@ -117,47 +120,48 @@ class ServerHandler implements Runnable {
                     log.info("S: '" + message);
                 }
                
-               else if(line.trim().equals("STAT")){
-                   message = "+OK "+ db.getNumberOfMessages(username)+" "+ db.getAllCharacters(username);
-                   out.println(message);
-                   log.info("S: '" + message);
+               else if(command.trim().equals("STAT")){
+                   if(db.getNumberOfMessages(username) > 0){
+                       out.println("+OK "+ db.getNumberOfMessages(username)+" "+ db.getAllCharacters(username));
+                       log.info("S: +OK "+ db.getNumberOfMessages(username)+" "+ db.getAllCharacters(username));
+                   }
+                   else{
+                       out.println("-ERR no such message");
+                       log.info("-ERR no such message");
+                   }
+                   
                }
                
-               else if(line.trim().equals("LIST")){
-                   message = "+OK"+ db.getNumberOfMessages(username)+"  messages ("+db.getAllCharacters(username)+" octets)";
-                   out.println(message);
-                   log.info("S: '" + message);
-                   message = db.getMessageInfo(username);
-                   out.println(db.getMessageInfo(username));
-                   log.info("S: '" + message);
+               else if(command.trim().equals("LIST")){
+                   if(db.getNumberOfMessages(username) > 0){
+                       out.println("+OK"+ db.getNumberOfMessages(username)+"  messages ("+db.getAllCharacters(username)+" octets)\r\n");
+                       out.println(db.getMessageInfo(username));
+                       log.info("+OK "+ db.getNumberOfMessages(username)+"  messages ("+db.getAllCharacters(username)+" octets)"+ db.getMessageInfo(username));
+                   }
+                   else{
+                       out.println("-ERR no such message");
+                       log.info("-ERR no such message");
+                   }
+                   
                }
                
-               else if(line.trim().equals("UIDL")){
-                   message = "+OK";
-                   out.println(message);
-                   log.info("S: '" + message);
-                   message = db.getMessages(username);
-                   out.println(message);
-                   log.info("S: '" + message);
+               else if(command.trim().equals("UIDL")){
+                   out.println(db.getMessages(username));
+                   log.info("S: " + db.getMessages(username));
                }
                
                else if(command.equals("RETR")){
-                   message = "+OK";
-                   out.println(message);
-                   log.info("S: '" + message);
-                   message = db.getMessage(username, Integer.parseInt(info));
-                   out.println(message);
-                   log.info("S: '" + message);
+                   out.println(db.getMessage(username, Integer.parseInt(info)));
+                   log.info("S: " + db.getMessage(username, Integer.parseInt(info)));
                }
                
-               else if (line.trim().equals("NOOP")) { 
-                    message = "+OK";
-                   out.println(message);
-                   log.info("S: '" + message);
+               else if (command.trim().equals("NOOP")) { 
+                out.println("+OK");
+                log.info("S: +OK");
                 }
-
-                else {
-                    message = "-ERR invalid command" + line;
+               
+               else {
+                    message = "-ERR invalid command " + line;
                     out.println(message);
                     log.info("S: '" + message);
                 }
