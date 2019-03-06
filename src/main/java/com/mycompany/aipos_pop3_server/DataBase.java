@@ -129,8 +129,8 @@ public class DataBase {
         } catch (SQLException e) { 
         e.getMessage(); 
         e.printStackTrace(); 
-        message = "";
-        log.info(e.getMessage());
+        message = "-ERR no such message";
+        log.error(e.getMessage());
         } 
         
         return message;
@@ -156,8 +156,8 @@ public class DataBase {
         } catch (SQLException e) { 
         e.getMessage(); 
         e.printStackTrace(); 
-        message = "";
-        log.info(e.getMessage());
+        message = "-ERR no such message";
+        log.error(e.getMessage());
         } 
         
         return message;
@@ -173,7 +173,7 @@ public class DataBase {
         } catch (SQLException e) {
             e.getMessage();
             e.printStackTrace();
-            log.info(e.getMessage());
+            log.error(e.getMessage());
         }
         return false;
     }
@@ -196,7 +196,7 @@ public class DataBase {
         } catch (SQLException e) {
             e.getMessage();
             e.printStackTrace();
-            log.info(e.getMessage());
+            log.error(e.getMessage());
         }
 
         return false;
@@ -220,7 +220,7 @@ public class DataBase {
         } catch (SQLException e) {
             e.getMessage();
             e.printStackTrace();
-            log.info(e.getMessage());
+            log.error(e.getMessage());
         }
     }
     
@@ -233,7 +233,7 @@ public class DataBase {
         } catch (SQLException e) {
             e.getMessage();
             e.printStackTrace();
-            log.info(e.getMessage());
+            log.error(e.getMessage());
         }
     }
     
@@ -247,7 +247,7 @@ public class DataBase {
         } catch (SQLException e) {
             e.getMessage();
             e.printStackTrace();
-            log.info(e.getMessage());
+            log.error(e.getMessage());
         }
         return false;
     }
@@ -266,7 +266,7 @@ public class DataBase {
         } catch (SQLException e) {
             e.getMessage();
             e.printStackTrace();
-            log.info(e.getMessage());
+            log.error(e.getMessage());
         }
 
         return false;
