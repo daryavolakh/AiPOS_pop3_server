@@ -69,7 +69,7 @@ class ServerHandler implements Runnable {
                     } else {
                         message = "-ERR never heard of mailbox name";
                         out.println(message);
-                        log.info("S: '" + message);
+                        log.error("S: '" + message);
                     }
                }
                
@@ -81,7 +81,7 @@ class ServerHandler implements Runnable {
                     } else {
                         message = "-ERR invalid password";
                         out.println(message);
-                        log.info("S: '" + message);
+                        log.error("S: '" + message);
                     }
                }
                
@@ -100,7 +100,7 @@ class ServerHandler implements Runnable {
                     } else {
                         message = "-ERR no such message";
                         out.println(message);
-                        log.info("S: '" + message);
+                        log.error("S: '" + message);
                     }
                 } 
                 
@@ -127,7 +127,7 @@ class ServerHandler implements Runnable {
                    }
                    else{
                        out.println("-ERR no such message");
-                       log.info("-ERR no such message");
+                       log.error("-ERR no such message");
                    }
                    
                }
@@ -140,7 +140,7 @@ class ServerHandler implements Runnable {
                    }
                    else{
                        out.println("-ERR no such message");
-                       log.info("-ERR no such message");
+                       log.error("-ERR no such message");
                    }
                    
                }
@@ -163,12 +163,12 @@ class ServerHandler implements Runnable {
                else {
                     message = "-ERR invalid command " + line;
                     out.println(message);
-                    log.info("S: '" + message);
+                    log.error("S: '" + message);
                 }
             }
         } catch (IOException exception) {
             System.out.println("Can't get input data");
-            log.info("Can't get inout data");
+            log.error("Can't get inout data");
         } 
     }
 }
