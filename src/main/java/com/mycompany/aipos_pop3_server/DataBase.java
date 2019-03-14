@@ -153,6 +153,36 @@ public class DataBase {
         
         return message;
     }
+    
+    public String getMessageRETR(String username, int mesInd) {
+        String message = "+OK\r\n";
+        int numOfMes = 0;
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT subject, message, mailFrom, username FROM mailbox WHERE username='" + username + "';");
+            while (resultSet.next()) {
+                if (numOfMes == mesInd - 1){
+                    //String tempMessage = message;
+                    message += "Subject: " + resultSet.getString("subject") + "\r\n";
+                    message += "To: " + resultSet.getString("username") + "\r\n";
+                    message += "From: " + resultSet.getString("mailFrom") + "\r\n";
+                    //Body Preview
+                    message += resultSet.getString("message") + "\r\n";
+                    message += ".";
+                    return message;
+                }
+                numOfMes++; 
+                
+            }
+        } catch (SQLException e) {
+            e.getMessage();
+            e.printStackTrace();
+            message = "-ERR no such message";
+            log.error(e.getMessage());
+        }
+        
+        return message;
+    }
 
     public boolean checkUser(String user) {
         try {
@@ -207,6 +237,7 @@ public class DataBase {
     public boolean delete(String user, int number) {
         List<String> list = new ArrayList<String>();
         try {
+            System.out.println("I AM IN!!!");
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT message FROM mailbox WHERE username='" + user + "'");
 
@@ -215,14 +246,13 @@ public class DataBase {
             }
             
             String message = list.get(number - 1);
-
-            if (findInTable(user, message, "mailbox")) {
-                PreparedStatement stUpdate = connection.prepareStatement("UPDATE mailbox SET deleted=true WHERE username='" + user + "' AND message='" + message + "' AND deleted=false;");
+            
+            PreparedStatement stUpdate = connection.prepareStatement("UPDATE mailbox SET deleted=true WHERE username='" + user + "' AND message='" + message + "' AND deleted=false;");
                             
-                stUpdate.execute();
-
-                return true;
-            }
+            stUpdate.execute();
+                
+            return true;
+            
         } catch (SQLException e) {
             e.getMessage();
             e.printStackTrace();

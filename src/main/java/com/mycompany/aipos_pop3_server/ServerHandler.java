@@ -26,10 +26,10 @@ class ServerHandler implements Runnable {
         String command = "";
         try (InputStream inStream = incoming.getInputStream();
                 OutputStream outStream = incoming.getOutputStream()) {
-            Scanner in = new Scanner(inStream, "UTF-8");
+            Scanner in = new Scanner(inStream, "windows-1251");
 
             PrintWriter out = new PrintWriter(
-                    new OutputStreamWriter(outStream, "UTF-8"), true);
+                    new OutputStreamWriter(outStream, "windows-1251"), true);
             /* true - auto cleanning*/
 
             String message = "+OK POP3 server ready <>";
@@ -126,8 +126,8 @@ class ServerHandler implements Runnable {
                     out.println(db.getMessages(username));
                     log.info("S: " + db.getMessages(username));
                 } else if (command.equals("RETR")) {
-                    out.println(db.getMessage(username, Integer.parseInt(info)));
-                    log.info("S: " + db.getMessage(username, Integer.parseInt(info)));
+                    out.println(db.getMessageRETR(username, Integer.parseInt(info)));
+                    log.info("S: " + db.getMessageRETR(username, Integer.parseInt(info)));
                 } else if (line.trim().equals("NOOP")) {
                     out.println("+OK");
                     log.info("S: +OK");
