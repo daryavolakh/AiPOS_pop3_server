@@ -1,15 +1,10 @@
 package com.mycompany.aipos_pop3_server;
 
 import com.mycompany.aipos_pop3_server.Commands.CommandsManager;
-import com.mycompany.aipos_pop3_server.Commands.STATCommand;
-import com.mycompany.aipos_pop3_server.Commands.UIDLCommand;
 import java.io.*;
 import java.net.*;
 import java.util.*;
 import org.apache.log4j.Logger;
-import java.sql.SQLException;
-import java.util.Base64.Decoder;
-import java.util.logging.Level;
 
 /*This class process data recieved from client  through one socket connection*/
 public class ServerHandler implements Runnable {
@@ -44,22 +39,17 @@ public class ServerHandler implements Runnable {
             //send back client's data
             boolean done = false;
             
-            
-            
             while (!done && in.hasNextLine()) {
                 String line = in.nextLine(); 
                 if (line.contains(" ")){ 
                     int index = line.indexOf(" "); 
                     info = line.substring(index + 1, line.length()); 
                     command = line.substring(0, index); 
-                    } 
-
-                    else { 
+                } else { 
                     command = line; 
-                    }
+                }
                 log.info("C: '" + line);
-                manager.findAndRun(command);
-               
+                manager.findAndRun(command);               
             }
         } catch (IOException exception) {
             System.out.println("Can't get input data");

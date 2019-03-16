@@ -2,7 +2,6 @@ package com.mycompany.aipos_pop3_server;
 
 import java.io.*;
 import java.net.*;
-import java.util.*;
 import org.apache.log4j.*;
 import org.apache.log4j.Logger;
 /**

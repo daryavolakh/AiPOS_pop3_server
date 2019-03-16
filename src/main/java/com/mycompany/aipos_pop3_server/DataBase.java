@@ -6,18 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 
-//???????? ????????? ? ???????????? (??????, ????????) ? ?????? ??????????
 public class DataBase {
 
     private static final String USERNAME = "root";
     private static final String PASSWORD = "password";
     private static final String URL = "jdbc:mysql://localhost:3306/aipos?useSSL=false";
     public Logger log = Logger.getLogger(DataBase.class);
-
     private Connection connection;
     private Driver driver;
 
-    private static final String DELETE_FROM_DELETEBOX = "DELETE FROM deletebox WHERE username=? AND message=?;";
     public DataBase() {
         try {
             driver = new FabricMySQLDriver();

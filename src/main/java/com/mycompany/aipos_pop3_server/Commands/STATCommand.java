@@ -9,7 +9,7 @@ import com.mycompany.aipos_pop3_server.ServerHandler;
 
 /**
  *
- * @author Алеся
+ * @author Alesya
  */
 public class STATCommand implements Command {
 
