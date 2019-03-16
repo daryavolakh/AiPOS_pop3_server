@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 
-//отправка сообщений с аттачментами (архимы, картинки) в разных кодировках
+//???????? ????????? ? ???????????? (??????, ????????) ? ?????? ??????????
 public class DataBase {
 
     private static final String USERNAME = "root";
@@ -237,7 +237,6 @@ public class DataBase {
     public boolean delete(String user, int number) {
         List<String> list = new ArrayList<String>();
         try {
-            System.out.println("I AM IN!!!");
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT message FROM mailbox WHERE username='" + user + "'");
 
