@@ -12,7 +12,7 @@ public class RSETCommand implements Command {
 
     @Override
     public void execute() {
-        ServerHandler.db.insertFromDeletebox(ServerHandler.username, ServerHandler.info);
+        ServerHandler.db.insertFromDeletebox(ServerHandler.username);
         String message = "+OK";
         ServerHandler.out.println(message);
         log.info("S: '" + message);

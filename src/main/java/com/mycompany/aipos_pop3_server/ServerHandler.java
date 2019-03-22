@@ -19,6 +19,7 @@ public class ServerHandler implements Runnable {
     public static String username = "";
     public static PrintWriter out;
     public static String info = "";
+    public static String command;
 
     public ServerHandler(Socket incoming, Server incomingserver) {
         this.incoming = incoming;
@@ -28,7 +29,6 @@ public class ServerHandler implements Runnable {
 
     public void run() {
         log.info("New client");
-        String command;
         CommandsManager manager = new CommandsManager();
         try (InputStream inStream = incoming.getInputStream();
                 OutputStream outStream = incoming.getOutputStream()) {

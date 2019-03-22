@@ -7,7 +7,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 public class DataBase {
-
     private static final String USERNAME = "root";
     private static final String PASSWORD = "password";
     private static final String URL = "jdbc:mysql://localhost:3306/aipos?useSSL=false";
@@ -258,16 +257,10 @@ public class DataBase {
         return false;
     }
 
-    public void insertFromDeletebox(String user, String message) {
+    public void insertFromDeletebox(String user) {
         try {
-            PreparedStatement statement = connection.prepareStatement("UPDATE mailbox SET deleted=false WHERE username='" + user + "' AND message='" + message + "' AND deleted=true;");
-            
-            ResultSet resultSet = statement.executeQuery();      
-
-            while (resultSet.next()) {
-                statement.execute();
-            }
-           
+            PreparedStatement statement = connection.prepareStatement("UPDATE mailbox SET deleted=false WHERE username='" + user + "' AND deleted=true;");
+            statement.execute();           
         } catch (SQLException e) {
             e.getMessage();
             e.printStackTrace();
