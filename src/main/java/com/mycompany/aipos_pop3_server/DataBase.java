@@ -1,19 +1,33 @@
 package com.mycompany.aipos_pop3_server;
 
+
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import java.io.*;
+import java.io.File;
 import java.sql.*;
 import com.mysql.fabric.jdbc.FabricMySQLDriver;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
-
+        
 public class DataBase {
+
     private static final String USERNAME = "root";
     private static final String PASSWORD = "password";
     private static final String URL = "jdbc:mysql://localhost:3306/aipos?useSSL=false";
     public Logger log = Logger.getLogger(DataBase.class);
+
     private Connection connection;
     private Driver driver;
 
+    private static final String DELETE_FROM_DELETEBOX = "DELETE FROM deletebox WHERE username=? AND message=?;";
     public DataBase() {
         try {
             driver = new FabricMySQLDriver();
@@ -150,22 +164,45 @@ public class DataBase {
         return message;
     }
     
-    public String getMessageRETR(String username, int mesInd) {
-        String message = "+OK\r\n";
+    public String getMessageRETR(String username, int mesInd) throws MessagingException {
+        String messageString = "+OK\r\n";
         int numOfMes = 0;
+        Message message = new MimeMessage(Session.getInstance(System.getProperties()));
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT subject, message, mailFrom, username FROM mailbox WHERE username='" + username + "';");
+            ResultSet resultSet = statement.executeQuery("SELECT subject, message, mailFrom, username, filePath FROM mailbox WHERE username='" + username + "';");
             while (resultSet.next()) {
                 if (numOfMes == mesInd - 1){
                     //String tempMessage = message;
-                    message += "Subject: " + resultSet.getString("subject") + "\r\n";
-                    message += "To: " + resultSet.getString("username") + "\r\n";
-                    message += "From: " + resultSet.getString("mailFrom") + "\r\n";
-                    //Body Preview
-                    message += resultSet.getString("message") + "\r\n";
-                    message += ".";
-                    return message;
+                    
+                    MimeMultipart multiPart = new MimeMultipart();
+
+                    MimeBodyPart messageBodyPart = new MimeBodyPart();
+                    messageBodyPart.setText(resultSet.getString("message"));
+                    message.setFrom(new InternetAddress(resultSet.getString("mailFrom")));
+                    message.setSubject(resultSet.getString("subject"));
+                    multiPart.addBodyPart(messageBodyPart);
+                    if(resultSet.getString("filePath") != null){
+                         MimeBodyPart attachment = new MimeBodyPart();
+                        DataSource source = new FileDataSource(new File(resultSet.getString("filePath")));
+                        attachment.setDataHandler(new DataHandler(source));
+                        multiPart.addBodyPart(attachment);
+                    }
+                    
+
+                    message.setContent(multiPart);
+                    
+                   
+                   ByteArrayOutputStream os = new ByteArrayOutputStream();
+                    try {
+                        message.writeTo(os);
+                    } catch (IOException ex) {
+                        java.util.logging.Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    String fg = os.toString();
+                    System.out.println(fg);
+                   return ("+OK\r\n" + os.toString() + "\r\n.");
+                    
                 }
                 numOfMes++; 
                 
@@ -173,11 +210,11 @@ public class DataBase {
         } catch (SQLException e) {
             e.getMessage();
             e.printStackTrace();
-            message = "-ERR no such message";
+            messageString = "-ERR no such message";
             log.error(e.getMessage());
         }
         
-        return message;
+        return messageString;
     }
 
     public boolean checkUser(String user) {
@@ -257,10 +294,16 @@ public class DataBase {
         return false;
     }
 
-    public void insertFromDeletebox(String user) {
+    public void insertFromDeletebox(String user, String message) {
         try {
-            PreparedStatement statement = connection.prepareStatement("UPDATE mailbox SET deleted=false WHERE username='" + user + "' AND deleted=true;");
-            statement.execute();           
+            PreparedStatement statement = connection.prepareStatement("UPDATE mailbox SET deleted=false WHERE username='" + user + "' AND message='" + message + "' AND deleted=true;");
+            
+            ResultSet resultSet = statement.executeQuery();      
+
+            while (resultSet.next()) {
+                statement.execute();
+            }
+           
         } catch (SQLException e) {
             e.getMessage();
             e.printStackTrace();
