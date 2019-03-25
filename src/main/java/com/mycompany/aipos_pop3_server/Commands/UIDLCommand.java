@@ -1,6 +1,6 @@
 package com.mycompany.aipos_pop3_server.Commands;
 
-import com.mycompany.aipos_pop3_server.ServerHandler;
+import com.mycompany.aipos_pop3_server.DataBase;
 import org.apache.log4j.Logger;
 
 /**
@@ -12,8 +12,12 @@ public class UIDLCommand implements Command {
     public Logger log = Logger.getLogger(UIDLCommand.class);
 
     @Override
-    public void execute() {
-        ServerHandler.out.println(ServerHandler.db.getMessages(ServerHandler.username));
-        log.info("S: " + ServerHandler.db.getMessages(ServerHandler.username));
+    public String execute(String info, String username) {
+        DataBase db = new DataBase();
+        String message = db.getMessages(username);
+        //ServerHandler.out.println(message);
+        log.info("S: " + message);
+        
+        return message;
     }
 }

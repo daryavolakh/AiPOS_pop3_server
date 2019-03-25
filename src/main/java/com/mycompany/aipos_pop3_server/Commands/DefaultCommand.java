@@ -13,10 +13,12 @@ public class DefaultCommand implements Command {
     String message;
 
     @Override
-    public void execute() {
-        message = "-ERR invalid command " + ServerHandler.command;
-        ServerHandler.out.println(message);
-        System.out.println(message);
+    public String execute(String info, String username) {
+        message = "-ERR invalid command ";// + ServerHandler.command;
+        //ServerHandler.out.println(message);
+       // System.out.println(message);
         log.error("S: '" + message);
+        
+        return message;
     }
 }

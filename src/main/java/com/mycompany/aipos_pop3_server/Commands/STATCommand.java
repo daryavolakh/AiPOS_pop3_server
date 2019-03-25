@@ -5,7 +5,8 @@
  */
 package com.mycompany.aipos_pop3_server.Commands;
 
-import com.mycompany.aipos_pop3_server.ServerHandler;
+import com.mycompany.aipos_pop3_server.DataBase;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -13,17 +14,23 @@ import com.mycompany.aipos_pop3_server.ServerHandler;
  */
 public class STATCommand implements Command {
 
-    public org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(STATCommand.class);
-    
+    public org.apache.log4j.Logger log = Logger.getLogger(STATCommand.class);
+
     @Override
-    public void execute() {
-        if (ServerHandler.db.getNumberOfMessages(ServerHandler.username) > 0) {
-                        ServerHandler.out.println("+OK " + ServerHandler.db.getNumberOfMessages(ServerHandler.username) + " " + ServerHandler.db.getAllCharacters(ServerHandler.username));
-                        log.info("S: +OK " + ServerHandler.db.getNumberOfMessages(ServerHandler.username) + " " + ServerHandler.db.getAllCharacters(ServerHandler.username));
-                    } else {
-                        ServerHandler.out.println("-ERR no such message");
-                        log.error("-ERR no such message");
-                    }
+    public String execute(String info, String username) {
+        String message;
+        DataBase db = new DataBase();
+        if (db.getNumberOfMessages(username) > 0) {
+            message = "+OK " + db.getNumberOfMessages(username) + " " + db.getAllCharacters(username);
+           // ServerHandler.out.println("+OK " + ServerHandler.db.getNumberOfMessages(ServerHandler.username) + " " + ServerHandler.db.getAllCharacters(ServerHandler.username));
+            log.info("S: " + message);
+        } else {
+            message = "-ERR no such message";
+           // ServerHandler.out.println("-ERR no such message");
+            log.error("S: " + message);
+        }
+        
+        return message;
     }
-    
+
 }

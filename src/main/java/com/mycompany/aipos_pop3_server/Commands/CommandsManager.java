@@ -35,9 +35,9 @@ public class CommandsManager {
       
   }
   
-   public void findAndRun(String dataFromClient){
+   public String findAndRun(String command, String info, String username){
        
-           commands.getOrDefault(dataFromClient, new DefaultCommand()).execute();
+         return  commands.getOrDefault(command, new DefaultCommand()).execute(info,username);
         
    }
    

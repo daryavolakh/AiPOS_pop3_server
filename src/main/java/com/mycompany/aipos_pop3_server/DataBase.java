@@ -1,6 +1,5 @@
 package com.mycompany.aipos_pop3_server;
 
-
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
@@ -16,7 +15,7 @@ import com.mysql.fabric.jdbc.FabricMySQLDriver;
 import java.util.*;
 import java.util.logging.Level;
 import org.apache.log4j.Logger;
-        
+
 public class DataBase {
 
     private static final String USERNAME = "root";
@@ -27,12 +26,11 @@ public class DataBase {
     private Connection connection;
     private Driver driver;
 
-    private static final String DELETE_FROM_DELETEBOX = "DELETE FROM deletebox WHERE username=? AND message=?;";
     public DataBase() {
         try {
             driver = new FabricMySQLDriver();
         } catch (SQLException ex) {
-            System.out.println("Creating driver error!");
+            // System.out.println("Creating driver error!");
             log.info("Creating driver error!");
             return;
         }
@@ -40,17 +38,17 @@ public class DataBase {
         try {
             DriverManager.registerDriver(driver);
         } catch (SQLException ex) {
-            System.out.println("Can't register driver!");
+            // System.out.println("Can't register driver!");
             log.info("Can't register driver!");
             return;
         }
 
         try {
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            System.out.println("Get connection!");
+            // System.out.println("Get connection!");
             log.info("Get connection with DB");
         } catch (SQLException ex) {
-            System.out.println("Can't create connection!");
+            // System.out.println("Can't create connection!");
             log.info("Can't create connection with DB");
             return;
         }
@@ -160,10 +158,10 @@ public class DataBase {
             message = "-ERR no such message";
             log.error(e.getMessage());
         }
-        
+
         return message;
     }
-    
+
     public String getMessageRETR(String username, int mesInd) throws MessagingException {
         String messageString = "+OK\r\n";
         int numOfMes = 0;
@@ -172,9 +170,9 @@ public class DataBase {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT subject, message, mailFrom, username, filePath FROM mailbox WHERE username='" + username + "';");
             while (resultSet.next()) {
-                if (numOfMes == mesInd - 1){
+                if (numOfMes == mesInd - 1) {
                     //String tempMessage = message;
-                    
+
                     MimeMultipart multiPart = new MimeMultipart();
 
                     MimeBodyPart messageBodyPart = new MimeBodyPart();
@@ -182,18 +180,16 @@ public class DataBase {
                     message.setFrom(new InternetAddress(resultSet.getString("mailFrom")));
                     message.setSubject(resultSet.getString("subject"));
                     multiPart.addBodyPart(messageBodyPart);
-                    if(resultSet.getString("filePath") != null){
-                         MimeBodyPart attachment = new MimeBodyPart();
+                    if (resultSet.getString("filePath") != null && resultSet.getString("filePath") != "") {
+                        MimeBodyPart attachment = new MimeBodyPart();
                         DataSource source = new FileDataSource(new File(resultSet.getString("filePath")));
                         attachment.setDataHandler(new DataHandler(source));
                         multiPart.addBodyPart(attachment);
                     }
-                    
 
                     message.setContent(multiPart);
-                    
-                   
-                   ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+                    ByteArrayOutputStream os = new ByteArrayOutputStream();
                     try {
                         message.writeTo(os);
                     } catch (IOException ex) {
@@ -201,11 +197,11 @@ public class DataBase {
                     }
                     String fg = os.toString();
                     System.out.println(fg);
-                   return ("+OK\r\n" + os.toString() + "\r\n.");
-                    
+                    return ("+OK\r\n" + os.toString() + "\r\n.");
+
                 }
-                numOfMes++; 
-                
+                numOfMes++;
+
             }
         } catch (SQLException e) {
             e.getMessage();
@@ -213,7 +209,7 @@ public class DataBase {
             messageString = "-ERR no such message";
             log.error(e.getMessage());
         }
-        
+
         return messageString;
     }
 
@@ -270,21 +266,25 @@ public class DataBase {
     public boolean delete(String user, int number) {
         List<String> list = new ArrayList<String>();
         try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT message FROM mailbox WHERE username='" + user + "'");
+            if (getNumberOfMessages(user) + 1 >= number) {
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT message FROM mailbox WHERE username='" + user + "'");
 
-            while (resultSet.next()) {
-                list.add(resultSet.getString(1));
+                while (resultSet.next()) {
+                    list.add(resultSet.getString(1));
+                }
+
+                String message = list.get(number - 1);
+
+                PreparedStatement stUpdate = connection.prepareStatement("UPDATE mailbox SET deleted=true WHERE username='" + user + "' AND message='" + message + "' AND deleted=false;");
+
+                stUpdate.execute();
+
+                return true;
+            } else {
+                return false;
             }
-            
-            String message = list.get(number - 1);
-            
-            PreparedStatement stUpdate = connection.prepareStatement("UPDATE mailbox SET deleted=true WHERE username='" + user + "' AND message='" + message + "' AND deleted=false;");
-                            
-            stUpdate.execute();
-                
-            return true;
-            
+
         } catch (SQLException e) {
             e.getMessage();
             e.printStackTrace();
@@ -294,16 +294,11 @@ public class DataBase {
         return false;
     }
 
-    public void insertFromDeletebox(String user, String message) {
+    public void insertFromDeletebox(String user) {
         try {
-            PreparedStatement statement = connection.prepareStatement("UPDATE mailbox SET deleted=false WHERE username='" + user + "' AND message='" + message + "' AND deleted=true;");
-            
-            ResultSet resultSet = statement.executeQuery();      
+            PreparedStatement statement = connection.prepareStatement("UPDATE mailbox SET deleted=false WHERE username='" + user + "' AND deleted=true;");
 
-            while (resultSet.next()) {
-                statement.execute();
-            }
-           
+            statement.execute();
         } catch (SQLException e) {
             e.getMessage();
             e.printStackTrace();

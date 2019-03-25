@@ -12,17 +12,19 @@ public class USERCommand implements Command {
     public String message;
 
     @Override
-    public void execute() {
+    public String execute(String info, String username) {
         ServerHandler.username = ServerHandler.info;
-
+        String message;
         if (ServerHandler.db.checkUser(ServerHandler.info)) {
             message = "+OK User accepted";
-            ServerHandler.out.println(message);
+           // ServerHandler.out.println(message);
             log.info("S: '" + message);
         } else {
             message = "-ERR never heard of mailbox name";
-            ServerHandler.out.println(message);
+           // ServerHandler.out.println(message);
             log.error("S: '" + message);
         }
+        
+        return message;
     }
 }
