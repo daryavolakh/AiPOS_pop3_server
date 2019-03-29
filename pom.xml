@@ -25,13 +25,42 @@
       </dependency>
       <dependency>
             <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-            <version>1.4</version>
+            <artifactId>javax.mail-api</artifactId>
+            <version>1.4.7</version>
         </dependency>
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
+      <dependency>
+        <groupId>javax.mail</groupId>
+        <artifactId>mail</artifactId>
+        <version>1.4.7</version>
+    </dependency>
    </dependencies>
     <build>
         <testSourceDirectory>src/test</testSourceDirectory>
         <plugins>
+            <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.7.6.201602180812</version>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>prepare-agent</goal>
+                    </goals>
+                </execution>
+                <execution>
+                    <id>report</id>
+                    <phase>prepare-package</phase>
+                    <goals>
+                        <goal>report</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -62,6 +91,22 @@
                                     <type>jar</type>
 
                                     <destFileName>mysql-connector-java-5.1.47.jar</destFileName>
+                                    <overWrite>false</overWrite>
+                                </artifactItem>
+                                
+                                <artifactItem>
+                                    <groupId>javax.mail</groupId>
+                                    <artifactId>mail</artifactId>
+                                    <type>jar</type>
+                                    <destFileName>javax.mail-1.4.7.jar</destFileName>
+                                    <overWrite>false</overWrite>
+                                </artifactItem>
+                                
+                                <artifactItem>
+                                    <groupId>javax.mail</groupId>
+                                    <artifactId>javax.mail-api</artifactId>
+                                    <type>jar</type>
+                                    <destFileName>javax.mail-api-1.4.7.jar</destFileName>
                                     <overWrite>false</overWrite>
                                 </artifactItem>
                             </artifactItems>

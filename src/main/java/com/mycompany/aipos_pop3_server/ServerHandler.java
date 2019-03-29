@@ -39,13 +39,15 @@ public class ServerHandler implements Runnable {
             out = new PrintWriter(
                     new OutputStreamWriter(outStream, "windows-1251"), true);
             String message = "+OK POP3 server ready <>";
+            System.out.println("S: " + message);
             out.println(message);
-            log.info("S: '" + message);
+            log.info("S: " + message);
             //send back client's data
             boolean done = false;
 
             while (!done && in.hasNextLine()) {
-                String line = in.nextLine();
+                String line = in.nextLine();                
+                System.out.println("C: '" + line);
                 if (line.contains(" ")) {
                     int index = line.indexOf(" ");
                     info = line.substring(index + 1, line.length());
@@ -53,9 +55,11 @@ public class ServerHandler implements Runnable {
                 } else {
                     command = line;
                 }
-                log.info("C: '" + line);
+                log.info("C: " + line);
                 String answer = manager.findAndRun(command, info, username);
                 out.println(answer);
+                
+                System.out.println("S: " + answer);
 
             }
         } catch (IOException exception) {

@@ -17,7 +17,7 @@ public class Server {
 
     public Server(int port) {
         this.port = port;
-        PropertyConfigurator.configure("src/resources/log4j.properties");
+        PropertyConfigurator.configure("log4j.properties");
         
         log.info("Start server");
     }
@@ -36,8 +36,9 @@ public class Server {
                 Thread thread = new Thread(r);
                 thread.start();
 
-                numOfClients++;                
-                System.out.println("number of clients " + numOfClients);
+                numOfClients++;  
+                System.out.println("NEW CLIENT");
+                //System.out.println("number of clients " + numOfClients);
             }
         } catch (IOException exeption) {
             log.info("Start server error!");
